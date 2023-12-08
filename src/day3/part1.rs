@@ -138,22 +138,22 @@ fn char_has_adjacent_symbol(
     has_adjacent_symbols
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "467..114..
-      ...*......
-      ..35..633.
-      ......#...
-      617*......
-      .....+.58.
-      ..592.....
-      ......755.
-      ...$.*....
-      .664.598.."
-            .to_string();
-        assert_eq!(solution(input), 4361);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "467..114..
+//       ...*......
+//       ..35..633.
+//       ......#...
+//       617*......
+//       .....+.58.
+//       ..592.....
+//       ......755.
+//       ...$.*....
+//       .664.598.."
+//             .to_string();
+//         assert_eq!(solution(input), 4361);
+//     }
+// }

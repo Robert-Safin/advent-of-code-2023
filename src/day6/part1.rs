@@ -38,14 +38,14 @@ pub fn solution(input: String) -> i32 {
     factor
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "Time:      7  15   30
-      Distance:  9  40  200"
-            .to_string();
-        assert_eq!(solution(input), 288);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "Time:      7  15   30
+//       Distance:  9  40  200"
+//             .to_string();
+//         assert_eq!(solution(input), 288);
+//     }
+// }

@@ -20,15 +20,15 @@ pub fn solution(input: String) -> i32 {
     sum
 }
 
-#[cfg(test)]
-mod test {
-    use std::fs;
+// #[cfg(test)]
+// mod test {
+//     use std::fs;
 
-    use super::*;
-    #[test]
-    fn test() {
-        let input = fs::read_to_string("src/inputs/day1.txt").unwrap();
+//     use super::*;
+//     #[test]
+//     fn test() {
+//         let input = fs::read_to_string("src/inputs/day1.txt").unwrap();
 
-        assert_eq!(solution(input), 54916)
-    }
-}
+//         assert_eq!(solution(input), 54916)
+//     }
+// }

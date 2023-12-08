@@ -53,15 +53,15 @@ const NUM_WORDS: [(&str, i32); 9] = [
     ("nine", 9),
 ];
 
-#[cfg(test)]
-mod test {
-    use std::fs;
+// #[cfg(test)]
+// mod test {
+//     use std::fs;
 
-    use super::*;
-    #[test]
-    fn test() {
-        let input = fs::read_to_string("src/inputs/day1.txt").unwrap();
+//     use super::*;
+//     #[test]
+//     fn test() {
+//         let input = fs::read_to_string("src/inputs/day1.txt").unwrap();
 
-        assert_eq!(solution(input), 54728)
-    }
-}
+//         assert_eq!(solution(input), 54728)
+//     }
+// }

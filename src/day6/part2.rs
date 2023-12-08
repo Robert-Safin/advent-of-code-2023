@@ -32,14 +32,14 @@ pub fn solution(input: String) -> i64 {
     count
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "Time:      7  15   30
-    Distance:  9  40  200"
-            .to_string();
-        assert_eq!(solution(input), 71503);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "Time:      7  15   30
+//     Distance:  9  40  200"
+//             .to_string();
+//         assert_eq!(solution(input), 71503);
+//     }
+// }

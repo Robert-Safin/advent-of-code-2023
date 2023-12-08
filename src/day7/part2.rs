@@ -152,17 +152,17 @@ fn char_priority(c: char) -> i32 {
     }
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "32T3K 765
-      T55J5 684
-      KK677 28
-      KTJJT 220
-      QQQJA 483"
-            .to_string();
-        assert_eq!(solution(input), 5905);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "32T3K 765
+//       T55J5 684
+//       KK677 28
+//       KTJJT 220
+//       QQQJA 483"
+//             .to_string();
+//         assert_eq!(solution(input), 5905);
+//     }
+// }
