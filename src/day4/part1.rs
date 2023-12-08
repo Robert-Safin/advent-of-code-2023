@@ -10,7 +10,7 @@ pub fn solution(input: String) -> i32 {
         .map(|x| x.split("|").collect::<Vec<&str>>())
         .collect::<Vec<Vec<&str>>>();
 
-    for (line_index, line) in parts.iter().enumerate() {
+    for (_line_index, line) in parts.iter().enumerate() {
         let mut number_matches = 0;
         let winning_numbers = line[0]
             .split_whitespace()

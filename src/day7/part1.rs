@@ -86,26 +86,25 @@ fn determine_type(tuple: &(String, i32)) -> HandType {
     values.sort();
     values.reverse();
 
-    let mut hand_type = HandType::HighCard;
-    match values[0] {
-        5 => hand_type = HandType::FiveOfAKind,
-        4 => hand_type = HandType::FourOfAKind,
+    let hand_type = match values[0] {
+        5 => HandType::FiveOfAKind,
+        4 => HandType::FourOfAKind,
         3 => {
             if values[1] == &2 {
-                hand_type = HandType::FullHouse
+                HandType::FullHouse
             } else {
-                hand_type = HandType::ThreeOfAKind
+                HandType::ThreeOfAKind
             }
         }
         2 => {
             if values[1] == &2 {
-                hand_type = HandType::TwoPair
+                HandType::TwoPair
             } else {
-                hand_type = HandType::OnePair
+                HandType::OnePair
             }
         }
-        _ => hand_type = HandType::HighCard,
-    }
+        _ => HandType::HighCard,
+    };
     hand_type
 }
 
@@ -143,17 +142,17 @@ fn char_priority(c: char) -> i32 {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     use super::*;
-//     #[test]
-//     fn test_brief() {
-//         let input = "32T3K 765
-//       T55J5 684
-//       KK677 28
-//       KTJJT 220
-//       QQQJA 483"
-//             .to_string();
-//         assert_eq!(solution(input), 6440);
-//     }
-// }
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn test_brief() {
+        let input = "32T3K 765
+      T55J5 684
+      KK677 28
+      KTJJT 220
+      QQQJA 483"
+            .to_string();
+        assert_eq!(solution(input), 6440);
+    }
+}
