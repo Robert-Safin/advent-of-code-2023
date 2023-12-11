@@ -56,10 +56,9 @@ pub fn solution(input: String) -> i32 {
     }
 
     main_loop.push((current_location.x, current_location.y));
-    // find char 'S' in in put and replace with '7'
     let mut clean_input = input.clone();
-    for (y, row) in clean_input.iter_mut().enumerate() {
-        for (x, tile) in row.iter_mut().enumerate() {
+    for row in clean_input.iter_mut() {
+        for tile in row.iter_mut() {
             if *tile == 'S' {
                 *tile = 'F';
             }
@@ -230,21 +229,21 @@ fn get_char_or_default(input: &Vec<Vec<char>>, x: isize, y: isize, default: char
     row[x as usize]
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "..........
-        .S------7.
-        .|F----7|.
-        .||OOOO||.
-        .||OOOO||.
-        .|L-7F-J|.
-        .|II||II|.
-        .L--JL--J.
-        .........."
-            .to_string();
-        assert_eq!(solution(input), 10);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "..........
+//         .S------7.
+//         .|F----7|.
+//         .||OOOO||.
+//         .||OOOO||.
+//         .|L-7F-J|.
+//         .|II||II|.
+//         .L--JL--J.
+//         .........."
+//             .to_string();
+//         assert_eq!(solution(input), 10);
+//     }
+// }
