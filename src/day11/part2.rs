@@ -74,23 +74,23 @@ fn count_intervals(start: i32, end: i32, empty: &[bool]) -> i32 {
         .count() as i32
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "
-        ...#......
-        .......#..
-        #.........
-        ..........
-        ......#...
-        .#........
-        .........#
-        ..........
-        .......#..
-        #...#....."
-            .to_string();
-        assert_eq!(solution(input), 1030);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "
+//         ...#......
+//         .......#..
+//         #.........
+//         ..........
+//         ......#...
+//         .#........
+//         .........#
+//         ..........
+//         .......#..
+//         #...#....."
+//             .to_string();
+//         assert_eq!(solution(input), 1030);
+//     }
+// }

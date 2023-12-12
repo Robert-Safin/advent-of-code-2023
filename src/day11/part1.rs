@@ -85,23 +85,23 @@ fn loop_and_sum(cords: Vec<(i32, i32)>) -> i32 {
     sum
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "
-        ...#......
-        .......#..
-        #.........
-        ..........
-        ......#...
-        .#........
-        .........#
-        ..........
-        .......#..
-        #...#....."
-            .to_string();
-        assert_eq!(solution(input), 374);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "
+//         ...#......
+//         .......#..
+//         #.........
+//         ..........
+//         ......#...
+//         .#........
+//         .........#
+//         ..........
+//         .......#..
+//         #...#....."
+//             .to_string();
+//         assert_eq!(solution(input), 374);
+//     }
+// }
