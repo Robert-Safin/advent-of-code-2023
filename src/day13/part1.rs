@@ -1,144 +1,132 @@
-pub fn solution(input: String) -> i32 {
-    let mut ver_count = 0;
-    let mut hor_count = 0;
-    let parsed_matrices = parse_input_to_matrices(input);
+struct Grid2D {
+  data: Vec<Vec<char>>,
+}
 
-    for (matrix_i, matrix) in parsed_matrices.iter().enumerate() {
-        let ver_mirror: Option<(usize, usize)> = find_largest_vertical_mirror(&matrix);
-        let hor_mirror: Option<(usize, usize)> = find_largest_horizontal_mirror(&matrix);
+impl Grid2D {
+  fn from_lines(lines: &[String]) -> Self {
+      let data = lines.iter().map(|line| line.chars().collect()).collect();
+      Grid2D { data }
+  }
 
-        if get_mirror_size(ver_mirror) > get_mirror_size(hor_mirror) {
-            if ver_mirror.is_some() {
-                let (start, end) = ver_mirror.unwrap();
-                let middle = (start + end) / 2;
-                let len = matrix[0].len();
-                let cols_left = len - middle;
-                ver_count += cols_left;
+  fn width(&self) -> usize {
+      self.data.first().map_or(0, |row| row.len())
+  }
+
+  fn height(&self) -> usize {
+      self.data.len()
+  }
+
+  fn col_iterator(&self, col: usize) -> impl Iterator<Item = &char> {
+      self.data.iter().map(move |row| &row[col])
+  }
+
+  fn row_iterator(&self, row: usize) -> impl Iterator<Item = &char> {
+      self.data[row].iter()
+  }
+
+  fn get(&self, x: usize, y: usize) -> Option<&char> {
+      self.data.get(y).and_then(|row| row.get(x))
+  }
+
+  fn replace(&mut self, x: usize, y: usize, value: char) {
+      if let Some(row) = self.data.get_mut(y) {
+          if let Some(cell) = row.get_mut(x) {
+              *cell = value;
+          }
+      }
+  }
+}
+
+fn is_vert_reflect(g: &Grid2D, idx: usize) -> bool {
+    let rightmost_mirror = idx;
+    let leftmost_mirror = idx + 1;
+
+    let foo: Vec<_> = (0..=rightmost_mirror).rev().zip(leftmost_mirror..g.width()).collect();
+
+    foo.into_iter().all(|a| {
+        let first = a.0;
+        let second = a.1;
+
+        let collection: Vec<_> = g.col_iterator(first).zip(g.col_iterator(second)).collect();
+
+        collection.iter().all(|a| a.0 == a.1)
+    })
+}
+
+fn is_horiz_reflect(g: &Grid2D, idx: usize) -> bool {
+    let rightmost_mirror = idx;
+    let leftmost_mirror = idx + 1;
+
+    let foo: Vec<_> = (0..=rightmost_mirror).rev().zip(leftmost_mirror..g.height()).collect();
+    foo.into_iter().all(|a| {
+        let first = a.0;
+        let second = a.1;
+
+        g.row_iterator(first).zip(g.row_iterator(second)).all(|a| a.0 == a.1)
+    })
+}
+
+fn smudge_score(grid: &mut Grid2D) -> u64 {
+    let old_score = reflection_score(grid);
+    let old_score_value = old_score.first().unwrap();
+
+    for x in 0..grid.width() {
+        for y in 0..grid.height() {
+            let curr = *grid.get(x, y).unwrap();
+            let new = match curr {
+                '#' => '.',
+                '.' => '#',
+                _ => panic!("invalid grid item: {curr}")
+            };
+
+            grid.replace(x, y, new);
+            let new_score = reflection_score(grid);
+            if !new_score.is_empty() && new_score != old_score {
+                return new_score.into_iter().find(|x| x != old_score_value).unwrap()
             }
+
+            grid.replace(x, y, curr);
+        }
+    }
+
+    todo!()
+}
+
+fn reflection_score(grid: &Grid2D) -> Vec<u64> {
+    let mut scores = Vec::new();
+    (0..grid.width() - 1).filter_map(|idx| {
+        if is_vert_reflect(grid, idx) {
+            Some(idx as u64 + 1)
         } else {
-            if hor_mirror.is_some() {
-                let (start, end) = hor_mirror.unwrap();
-                let middle = (start + end) / 2;
-                let len = matrix.len();
-                let rows_left = len - middle;
-                hor_count += rows_left;
-            }
+            None
         }
-    }
-    let result = ver_count + (hor_count * 100);
-    println!("{}", result);
-    result as i32
-}
+    }).for_each(|x| scores.push(x));
 
-fn get_mirror_size(mirror: Option<(usize, usize)>) -> i32 {
-    match mirror {
-        Some((start, end)) => {
-            if start <= end {
-                (end - start) as i32
-            } else {
-                0
-            }
+    (0..grid.height() - 1).filter_map(|idx| {
+        if is_horiz_reflect(grid, idx) {
+            Some((idx as u64 + 1) * 100)
+        } else {
+            None
         }
-        None => 0,
-    }
+    }).for_each(|x| scores.push(x));
+
+    scores
 }
 
-fn find_largest_horizontal_mirror(matrix: &Vec<Vec<char>>) -> Option<(usize, usize)> {
-    let mut largest_mirror = None;
-    let mut max_length = 0;
 
-    for start in 0..matrix.len() {
-        for end in (start + 1)..matrix.len() {
-            if matrix[start] == matrix[end] {
-                let mut current_start = start;
-                let mut current_end = end;
-                while current_start > 0 && current_end < matrix.len() - 1 {
-                    if matrix[current_start - 1] != matrix[current_end + 1] {
-                        break;
-                    }
-                    current_start -= 1;
-                    current_end += 1;
-                }
-                let length = current_end - current_start + 1;
-                if length > max_length {
-                    largest_mirror = Some((current_start, current_end));
-                    max_length = length;
-                }
-            }
-        }
-    }
+pub fn solution(input:String) {
 
-    largest_mirror
+
+    let mut part1_answer: u64 = 0;
+    let mut part2_answer: u64 = 0;
+
+    input.split("\n\n").for_each(|c| {
+        let lines: Vec<_> = c.lines().map(|l| l.to_string()).collect();
+        let mut grid = Grid2D::from_lines(&lines);
+        part1_answer += reflection_score(&grid).first().unwrap();
+        part2_answer += smudge_score(&mut grid);
+    });
+
+    println!("{}", part1_answer);
+    println!("{}", part2_answer);
 }
-
-fn find_largest_vertical_mirror(matrix: &Vec<Vec<char>>) -> Option<(usize, usize)> {
-    let mut largest_mirror = None;
-    let mut max_length = 0;
-
-    for mid_col in 1..matrix[0].len() - 1 {
-        let mut left = mid_col - 1;
-        let mut right = mid_col;
-        while left > 0 && right < matrix[0].len() - 1 && is_column_identical(matrix, left, right) {
-            left -= 1;
-            right += 1;
-        }
-        let length = right - left + 1;
-        if length > max_length {
-            largest_mirror = Some((left + 1, right - 1));
-            max_length = length;
-        }
-    }
-
-    largest_mirror
-}
-
-fn is_column_identical(matrix: &Vec<Vec<char>>, col1: usize, col2: usize) -> bool {
-    for row in 0..matrix.len() {
-        if matrix[row][col1] != matrix[row][col2] {
-            return false;
-        }
-    }
-    true
-}
-
-fn parse_input_to_matrices(input: String) -> Vec<Vec<Vec<char>>> {
-    let matrices = input.split("\n\n").collect::<Vec<&str>>();
-    let mut parsed_matrices = Vec::new();
-    for matrix in matrices {
-        let rows = matrix
-            .lines()
-            .map(|line| line.trim().chars().collect::<Vec<char>>())
-            .collect::<Vec<Vec<char>>>();
-        parsed_matrices.push(rows);
-    }
-    parsed_matrices
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "#.##..##.
-        ..#.##.#.
-        ##......#
-        ##......#
-        ..#.##.#.
-        ..##..##.
-        #.#.##.#.
-
-        #...##..#
-        #....#..#
-        ..##..###
-        #####.##.
-        #####.##.
-        ..##..###
-        #....#..#"
-            .to_string();
-        assert_eq!(solution(input), 405);
-    }
-}
-// not 34282 low
-// not 31757 high
-// not 34783
-// not 54294
