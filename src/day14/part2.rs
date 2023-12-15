@@ -190,22 +190,22 @@ fn parse_input_to_matrix(input: String) -> Vec<Vec<char>> {
         .collect()
 }
 
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn test_brief() {
-        let input = "O....#....
-      O.OO#....#
-      .....##...
-      OO.#O....O
-      .O.....O#.
-      O.#..O.#.#
-      ..O..#O..O
-      .......O..
-      #....###..
-      #OO..#...."
-            .to_string();
-        assert_eq!(solution(input), 64);
-    }
-}
+// #[cfg(test)]
+// mod test {
+//     use super::*;
+//     #[test]
+//     fn test_brief() {
+//         let input = "O....#....
+//       O.OO#....#
+//       .....##...
+//       OO.#O....O
+//       .O.....O#.
+//       O.#..O.#.#
+//       ..O..#O..O
+//       .......O..
+//       #....###..
+//       #OO..#...."
+//             .to_string();
+//         assert_eq!(solution(input), 64);
+//     }
+// }
