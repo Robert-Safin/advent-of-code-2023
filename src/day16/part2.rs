@@ -2,29 +2,29 @@ use std::collections::HashSet;
 
 pub fn solution(input: String) -> i32 {
     let matrix: Vec<Vec<char>> = parse_input(input);
-    let mut scores = Vec::new();
+    let mut scores: Vec<i32> = Vec::new();
 
-    let launch_points = generate_launch_points(matrix[0].len(), matrix.len());
+    let launch_points: Vec<Coords> = generate_launch_points(matrix[0].len(), matrix.len());
     for point in launch_points {
-        let score = launch_point(&matrix, point);
+        let score: i32 = launch_point(&matrix, point);
         scores.push(score);
     }
 
-    let max_score = scores.iter().max().unwrap();
+    let max_score: &i32 = scores.iter().max().unwrap();
     println!("max_score: {}", max_score);
     max_score.clone()
 }
 
 fn launch_point(matrix: &Vec<Vec<char>>, point: Coords) -> i32 {
     let mut visited: HashSet<Coords> = HashSet::new();
-    let energized = launch_beam(&matrix, point.direction, point, &mut visited);
-    let marked_matrix = mark_energized_coords(&matrix, &energized);
+    let energized: Vec<Coords> = launch_beam(&matrix, point.direction, point, &mut visited);
+    let marked_matrix: Vec<Vec<char>> = mark_energized_coords(&matrix, &energized);
     let count = count_x(&marked_matrix);
     count
 }
 
 fn generate_launch_points(grid_width: usize, grid_height: usize) -> Vec<Coords> {
-    let mut launch_points = Vec::new();
+    let mut launch_points: Vec<Coords> = Vec::new();
 
     for x in 0..grid_width {
         launch_points.push(Coords {
@@ -61,7 +61,7 @@ fn generate_launch_points(grid_width: usize, grid_height: usize) -> Vec<Coords> 
     launch_points
 }
 fn count_x(matrix: &Vec<Vec<char>>) -> i32 {
-    let mut count = 0;
+    let mut count: i32 = 0;
     for row in matrix {
         for cell in row {
             if *cell == 'X' {
@@ -76,7 +76,7 @@ fn mark_energized_coords(
     matrix: &Vec<Vec<char>>,
     energized_coords: &Vec<Coords>,
 ) -> Vec<Vec<char>> {
-    let mut marked_matrix = matrix.clone();
+    let mut marked_matrix: Vec<Vec<char>> = matrix.clone();
 
     for coord in energized_coords {
         if (coord.y as usize) < matrix.len() && (coord.x as usize) < matrix[0].len() {
@@ -110,7 +110,7 @@ fn launch_beam(
 ) -> Vec<Coords> {
     let mut energized_coords: Vec<Coords> = Vec::new();
 
-    let next_cell = match direction {
+    let next_cell: Coords = match direction {
         Direction::Down => Coords {
             y: origin.y + 1,
             x: origin.x,
@@ -142,7 +142,7 @@ fn launch_beam(
     visited.insert(next_cell);
     energized_coords.push(next_cell);
 
-    let next_cell = match direction {
+    let next_cell: Coords = match direction {
         Direction::Down => Coords {
             y: origin.y + 1,
             x: origin.x,
@@ -173,7 +173,7 @@ fn launch_beam(
 
     match encountered_space_type {
         '.' => {
-            let energized_cells = launch_beam(matrix, direction, next_cell, visited);
+            let energized_cells: Vec<Coords> = launch_beam(matrix, direction, next_cell, visited);
             energized_coords.extend(energized_cells);
         }
 
