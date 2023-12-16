@@ -142,32 +142,7 @@ fn launch_beam(
     visited.insert(next_cell);
     energized_coords.push(next_cell);
 
-    let next_cell: Coords = match direction {
-        Direction::Down => Coords {
-            y: origin.y + 1,
-            x: origin.x,
-            direction: Direction::Down,
-        },
-        Direction::Up => Coords {
-            y: origin.y - 1,
-            x: origin.x,
-            direction: Direction::Up,
-        },
-        Direction::Left => Coords {
-            y: origin.y,
-            x: origin.x - 1,
-            direction: Direction::Left,
-        },
-        Direction::Right => Coords {
-            y: origin.y,
-            x: origin.x + 1,
-            direction: Direction::Right,
-        },
-    };
 
-    if !is_in_bounds(next_cell.x, next_cell.y, matrix[0].len(), matrix.len()) {
-        return energized_coords;
-    }
 
     let encountered_space_type = matrix[next_cell.y as usize][next_cell.x as usize];
 
