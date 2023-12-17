@@ -1,6 +1,6 @@
-use advent_of_code_2023::day16;
+use advent_of_code_2023::day17;
 
 fn main() {
-    let input: String = std::fs::read_to_string("src/inputs/day16.txt").unwrap();
-    day16::part2::solution(input);
+    let input: String = std::fs::read_to_string("src/inputs/day17.txt").unwrap();
+    day17::part2::solution(&input);
 }
