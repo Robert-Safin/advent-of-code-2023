@@ -12,7 +12,6 @@ pub fn solution(input: String) -> i32 {
 
     flood_fill_outside(&mut grid);
 
-
     for line in grid.iter() {
         for c in line {
             if c == &'#' || c == &'.' {
